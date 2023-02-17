@@ -1,0 +1,144 @@
+{% extends "rps/base.html" %}
+
+
+{% block content %}
+
+<div class="container">
+    <div class="row content mt-4">
+
+        <div class="col col-md-4 align-self-start my-auto">
+            <div class="card text-white bg-primary bg-opacity-75 mb-3 mx-3" style="max-width: 60rem;">
+                <div class="card-header text-center">
+                    <h4>Total Courses: {{total_available_courses}}</h4>
+                </div>
+                <div class="card-body"></div>
+            </div>
+        </div>
+
+        <div class="col col-md-4">
+            <div class="card text-white bg-secondary mb-3" style="max-width: 40rem;">
+                <div class="card-header text-center">
+                    <h4>Courses Enrolled: {{total_courses_enrolled}}</h4>
+                </div>
+                <div class="card-body">
+                </div>
+            </div>
+        </div>
+
+        <div class="col col-md-4 align-self-start my-auto">
+            <div class="card text-white bg-primary bg-opacity-75 mb-3 mx-3" style="max-width: 60rem;">
+                <div class="card-header text-center">
+                    <h4>Enrollment Pending: {{total_courses_pending}}</h4>
+                </div>
+                <div class="card-body"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card my-4 mx-5">
+    <div class="card-header">
+        <i class="fas fa-table me-1"></i>
+        Enrolled Courses:
+    </div>
+    <div class="card-body mt-3">
+        <table class="table table-bordered table-striped text-center" id="datatablesSimple">
+            <thead class="table-dark text-center">
+                <tr>
+                    <th class="text-center">Course Code</th>
+                    <th class="text-center">Course Title</th>
+                    <th class="text-center">Credit</th>
+                    <th class="text-center">Enrollment Status</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for course in courses %}
+                <tr>
+                    <td> {{course.course.course_code}} </td>
+                    </td>
+                    <td> {{course.course.course_name}} </td>
+                    <td> {{course.course.credit_no}} </td>
+
+                    {% if course.has_enrolled == True and course.is_approved == True %}
+
+                    <td>
+                        <!-- <h6 class="text-success"> -->
+
+                        <p class="h6 text-center text-success">Enrolled</p>
+                        <!-- </h6> -->
+                        <!-- <a href="#" class="btn btn-primary active" role="button" aria-pressed="true">Enrolled</a> -->
+                    </td>
+
+                    {% elif course.has_enrolled == True and course.is_approved == False %}
+
+                    <td>
+                        <button class="btn btn-secondary" desabled>
+                            Pending
+                        </button>
+                        <!-- <a href="#" class="btn btn-primary active" role="button" aria-pressed="true">Enrolled</a> -->
+                    </td>
+
+                    {% else %}
+
+                    <td>
+                        <form action="" method="POST">
+                            {% csrf_token %}
+                            <input class="btn btn-primary" type="submit" name="{{course.id}}" value="Enroll" />
+                        </form>
+                        <!-- <a href="#" class="btn btn-primary" role="button" aria-pressed="true">Enroll Now</a> -->
+                    </td>
+
+                    {% endif %}
+
+                    <!-- {% if enrollment.course == "True" %}
+                    <td> <a href="#" class="btn btn-primary active" role="button" aria-pressed="true">Enrolled</a></td>
+                    {% else %}
+                    <td> <a href="#" class="btn btn-primary active" role="button" aria-pressed="true">Enroll Now</a>
+                    </td>
+                    {% endif %} -->
+
+                </tr>
+                {% endfor %}
+
+                <!-- {% for course in enrolled_courses %}
+
+                <tr>
+                    <td> {{course.course.course_code}} </td>
+                    <td> {{course.course.course_name}} </td>
+                    <td> {{course.course.credit_no}} </td>
+                    {% if course.has_enrolled == True %}
+                    <td>
+                        <button class="btn btn-secondary" desabled>
+                            Enrolled
+                        </button>
+                        <a href="#" class="btn btn-primary active" role="button" aria-pressed="true">Enrolled</a>
+                    </td>
+                    {% else %}
+                    <td>
+                        <form action="" method="POST">
+                            {% csrf_token %}
+                            <input class="btn btn-primary" type="submit" name="{{course.id}}" value="Enroll" />
+                        </form>
+                        <a href="#" class="btn btn-primary" role="button" aria-pressed="true">Enroll Now</a>
+                    </td>
+                    {% endif %}
+                </tr>
+                {% endfor %} -->
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+{% load static %}
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+<script>
+    const datatablesSimple = document.getElementById('datatablesSimple');
+    if (datatablesSimple) {
+        new simpleDatatables.DataTable(datatablesSimple);
+    }
+</script>
+
+{% endblock %}

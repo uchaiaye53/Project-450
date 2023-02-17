@@ -1,0 +1,79 @@
+{% extends "rps/base.html" %}
+
+
+{% block content %}
+
+<div class="card mb-4">
+    <div class="card-header">
+        <i class="fas fa-table me-1"></i>
+    </div>
+    <div class="card-body mt-3">
+        {% if assignment == "N/A" %}
+        <table class="table table-bordered table-striped text-center" id="datatablesSimple">
+            <thead class="table-dark">
+                <tr>
+                    <th class="text-center">Rank</th>
+                    <th class="text-center">Registration No.</th>
+                    <th class="text-center">Name</th>
+                    <th class="text-center">Credits Completed</th>
+                    <th class="text-center">CGPA</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for student in ranklists %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td> {{student.registration_no}} </td>
+                    <td> {{student.student_name}} </td>
+                    <td> {{student.total_credits}} </td>
+                    <td> {{student.cgpa}} </td>
+                </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+        {% else %}
+        <h4>Rank list for the course: {{assignment.course}}, taken by {{assignment.teacher}} in {{assignment.year}}</h4>
+        <table class="table table-bordered table-striped text-center" id="datatablesSimple">
+            <thead class="table-dark">
+                <tr>
+                    <th class="text-center">Rank</th>
+                    <th class="text-center">Registration No.</th>
+                    <th class="text-center">Name</th>
+                    <th class="text-center">Final Mark</th>
+                    <th class="text-center">GPA</th>
+                    <th class="text-center">Grade</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for student in ranklists %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td> {{student.registration_no}} </td>
+                    <td> {{student.student_name}} </td>
+                    <td> {{student.final_result}} </td>
+                    <td> {{student.gpa}} </td>
+                    <td> {{student.grade}} </td>
+                </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+        {% endif %}
+    </div>
+</div>
+
+<a href="#" class="btn btn-primary active" role="button" aria-pressed="true">View Total Ranklist</a>
+
+{% load static %}
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+<script>
+    const datatablesSimple = document.getElementById('datatablesSimple');
+    if (datatablesSimple) {
+        new simpleDatatables.DataTable(datatablesSimple);
+    }
+</script>
+
+{% endblock %}
