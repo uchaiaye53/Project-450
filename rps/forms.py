@@ -72,6 +72,12 @@ class edit_profile(forms.Form):
             attrs={"class": "col-md-6", "placeholder": self.last_name}
         )
 
+# class add_student_form():
+#     registration_no = forms.IntegerField()
+#     students_name = forms.CharField(max_length=100, widget=None)
+#     department= forms.CharField(max_length=50, widget=None)
+#     session=forms.ImageField()
+
 
 class select_semester(forms.Form):
 

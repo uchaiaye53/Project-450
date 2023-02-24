@@ -61,9 +61,15 @@
                 <a class="list-group-item list-group-item-action list-group-item-dark p-5"
                     href="{% url 'view-results' %}">Approved Results</a>
                 <a class="list-group-item list-group-item-action list-group-item-secondary p-5"
-                    href="{% url 'download_teachers' %}">Download Reasult</a>
+                    href="{% url 'download_teachers' %}">Download Result</a>
                 {% endif %}
                 <!-- <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Status</a> -->
+<!-- 
+                {% if user.is_staff %}
+                <a class="list-group-item list-group-item-action list-group-item-dark p-5"
+                    href="/home/uchha/codes/PGD_Result_Processing_System_RPS/rps/templates/rps/add_student.html">Add student</a>
+                {% endif %} -->
+
             </div>
         </div>
         <!-- Page content wrapper-->
