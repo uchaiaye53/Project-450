@@ -503,7 +503,7 @@ def results_view(request):
 @user_passes_test(is_teacher, login_url="home")
 def view_results_view(request):
 
-    query_set = Mark.objects.filter(enrollment__course__teacher__user=request.user)
+    query_set = Mark.objects.filter(enrollment__course__teacher__user=request.user, is_approved=True)
 
     return render(request, "view-results.html", {"marks": list(query_set)})
 
@@ -539,10 +539,12 @@ def edit_results_view(request):
                     enrollment = Enrollment.objects.filter(
                         student=student,
                         course=assignment,
-                        course__year=datetime.datetime.now().year,
+                        # course__year=datetime.datetime.now().year,
+                        course__year = form.cleaned_data["course_year"],
                     ).first()
 
-                    print("hellllllll", enrollment)
+                    if enrollment is None:
+                        raise Exception("Sorry! No matching enrollment founs. ")
 
                     mark = Mark()
                     mark.enrollment = enrollment

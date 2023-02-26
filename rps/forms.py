@@ -32,6 +32,7 @@ class individual_resultForm(forms.Form):
     attendance = forms.IntegerField()
     total_classes = forms.IntegerField()
     semester_final = forms.DecimalField()
+    course_year = forms.IntegerField()
 
     def __init__(self, *args, **kwargs):
         self.teacher = kwargs.pop("teacher")
